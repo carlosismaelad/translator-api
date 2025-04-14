@@ -18,5 +18,5 @@ public class Translator {
     private String targetLanguage;
 
     @OneToMany(mappedBy = "translator", cascade = CascadeType.ALL)
-    private List<Documents> documents;
+    private List<Document> documents;
 }
