@@ -1,4 +1,4 @@
-package com.carlosdourado.translatorapi.entities;
+package com.carlosdourado.translatorapi.domain.entities;
 
 import jakarta.persistence.*;
 

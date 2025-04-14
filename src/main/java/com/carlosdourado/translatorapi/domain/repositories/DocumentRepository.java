@@ -1,6 +1,6 @@
-package com.carlosdourado.translatorapi.repository;
+package com.carlosdourado.translatorapi.domain.repositories;
 
-import com.carlosdourado.translatorapi.entities.Document;
+import com.carlosdourado.translatorapi.domain.entities.Document;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
