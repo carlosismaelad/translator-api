@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface DocumentRepository extends JpaRepository<Document, UUID> {
-    List<Document> documents(String locale);
+    List<Document> findByLocale(String locale);
 }
