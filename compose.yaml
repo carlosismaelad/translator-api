@@ -3,7 +3,7 @@ networks:
     driver: bridge
 
 services:
-  librarydb:
+  translatordb:
     image: postgres:16.8
     container_name: translatordb
     ports:
@@ -11,7 +11,9 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
-      POSTGRES_DB: translator
+      POSTGRES_DB: translatordb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
     networks:
       - translator-network
 
@@ -19,7 +21,7 @@ services:
     image: dpage/pgadmin4
     container_name: pgadmin_translator
     depends_on:
-      - librarydb
+      - translatordb
     ports:
       - "15432:80"
     environment:
@@ -27,3 +29,6 @@ services:
       PGADMIN_DEFAULT_PASSWORD: admin
     networks:
       - translator-network
+
+volumes:
+  pgdata:
