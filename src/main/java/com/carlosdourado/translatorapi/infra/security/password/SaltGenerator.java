@@ -1,4 +1,4 @@
-package com.carlosdourado.translatorapi.infra.security;
+package com.carlosdourado.translatorapi.infra.security.password;
 
 import java.security.SecureRandom;
 import java.util.Base64;
