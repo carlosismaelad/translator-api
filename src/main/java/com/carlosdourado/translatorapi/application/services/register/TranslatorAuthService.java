@@ -1,13 +1,15 @@
-package com.carlosdourado.translatorapi.application.services;
+package com.carlosdourado.translatorapi.application.services.register;
 
-import com.carlosdourado.translatorapi.application.dtos.AuthResponse;
-import com.carlosdourado.translatorapi.application.dtos.LoginRequest;
-import com.carlosdourado.translatorapi.application.dtos.LoginResponse;
-import com.carlosdourado.translatorapi.application.dtos.RegisterRequest;
+import com.carlosdourado.translatorapi.application.dtos.registerDTOs.TranslatorRegisterResponse;
+import com.carlosdourado.translatorapi.application.dtos.loginDTOs.LoginRequest;
+import com.carlosdourado.translatorapi.application.dtos.loginDTOs.LoginResponse;
+import com.carlosdourado.translatorapi.application.dtos.registerDTOs.TranslatorRegisterRequest;
 import com.carlosdourado.translatorapi.domain.entities.Translator;
 import com.carlosdourado.translatorapi.domain.repositories.TranslatorRepository;
-import com.carlosdourado.translatorapi.infra.security.PasswordEncoder;
-import com.carlosdourado.translatorapi.infra.security.SaltGenerator;
+import com.carlosdourado.translatorapi.domain.repositories.UserRepository;
+import com.carlosdourado.translatorapi.infra.security.authentication.JwtService;
+import com.carlosdourado.translatorapi.infra.security.password.TranslatorPasswordEncoder;
+import com.carlosdourado.translatorapi.infra.security.password.SaltGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,10 @@ public class AuthService {
     @Autowired
     private TranslatorRepository repository;
 
-    public AuthResponse register(RegisterRequest request){
+    @Autowired
+    private JwtService jwtService;
+
+    public TranslatorRegisterResponse register(TranslatorRegisterRequest request){
         if(!request.password().equals(request.confirmPassword()))
             throw new IllegalArgumentException("Senha e confirmação não coincidem.");
 
@@ -24,7 +29,7 @@ public class AuthService {
             throw new IllegalArgumentException("e-mail informado já está em uso.");
 
         String salt = SaltGenerator.saltGenerator();
-        String hashedPassword = PasswordEncoder.encode(request.password(), salt);
+        String hashedPassword = TranslatorPasswordEncoder.encode(request.password(), salt);
 
         Translator translator = new Translator();
         translator.setName(request.name());
@@ -35,17 +40,19 @@ public class AuthService {
         translator.setSalt(salt);
 
         repository.save(translator);
-        return  new AuthResponse("Usuário registrado com sucesso!", translator.getName(), translator.getEmail());
+        return new TranslatorRegisterResponse("Novo tradutor registrado com sucesso!", translator.getName(), translator.getEmail());
     }
 
     public LoginResponse login(LoginRequest request){
         Translator translator = repository.findByEmail(request.email())
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
-        String hashedInput = PasswordEncoder.encode(request.password(), translator.getSalt());
+        String hashedInput = TranslatorPasswordEncoder.encode(request.password(), translator.getSalt());
 
         if(!hashedInput.equals(translator.getPassword()))
             throw new IllegalArgumentException("Senha incorreta! Tente novamente.");
 
-        return new LoginResponse("Login efetuado com sucesso!");
+        String token = jwtService.generateToken(translator.getEmail());
+
+        return new LoginResponse("Login efetuado com sucesso!", token);
     }
 }
