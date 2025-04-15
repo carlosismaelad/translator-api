@@ -6,7 +6,6 @@ import com.carlosdourado.translatorapi.application.dtos.loginDTOs.LoginResponse;
 import com.carlosdourado.translatorapi.application.dtos.registerDTOs.TranslatorRegisterRequest;
 import com.carlosdourado.translatorapi.domain.entities.Translator;
 import com.carlosdourado.translatorapi.domain.repositories.TranslatorRepository;
-import com.carlosdourado.translatorapi.domain.repositories.UserRepository;
 import com.carlosdourado.translatorapi.infra.security.authentication.JwtService;
 import com.carlosdourado.translatorapi.infra.security.password.TranslatorPasswordEncoder;
 import com.carlosdourado.translatorapi.infra.security.password.SaltGenerator;
@@ -14,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthService {
+public class TranslatorAuthService {
     @Autowired
     private TranslatorRepository repository;
 
