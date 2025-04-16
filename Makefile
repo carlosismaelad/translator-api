@@ -1,4 +1,4 @@
-.PHONY: up start stop down
+.PHONY: up start stop down clean-volume
 
 up:
 	docker compose -f compose.yaml up -d
@@ -11,3 +11,6 @@ stop:
 
 down:
 	docker compose -f compose.yaml down
+
+clean-volume:
+	docker compose -f compose.yaml down -v

@@ -2,7 +2,7 @@ package com.carlosdourado.translatorapi.application.controllers;
 
 import com.carlosdourado.translatorapi.application.dtos.translatioProfileDTOs.TranslationProfileRequest;
 import com.carlosdourado.translatorapi.application.dtos.translatioProfileDTOs.TranslationProfileResponse;
-import com.carlosdourado.translatorapi.application.services.translatorProfile.TranslationProfileService;
+import com.carlosdourado.translatorapi.application.services.translationProfile.TranslationProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

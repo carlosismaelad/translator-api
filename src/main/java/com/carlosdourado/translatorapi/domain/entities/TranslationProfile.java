@@ -27,7 +27,7 @@ public class TranslationProfile {
 
     @ManyToOne
     @JoinColumn(name = "translator_id")
-    private Translator translatorId;
+    private Translator translator;
 
     @PrePersist
     public void prePersist() {

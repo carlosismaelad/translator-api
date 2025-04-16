@@ -7,5 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface TranslationProfileRepository extends JpaRepository<TranslationProfile, UUID> {
-    Optional<TranslationProfile> findByTranslatorEmail(String email);
+    Optional<TranslationProfile> findByTranslatorId(UUID id);
 }

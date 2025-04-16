@@ -1,4 +1,4 @@
-package com.carlosdourado.translatorapi.application.services.translatorProfile;
+package com.carlosdourado.translatorapi.application.services.translationProfile;
 
 import com.carlosdourado.translatorapi.application.dtos.translatioProfileDTOs.TranslationProfileRequest;
 import com.carlosdourado.translatorapi.application.dtos.translatioProfileDTOs.TranslationProfileResponse;
@@ -28,7 +28,7 @@ public class TranslationProfileService {
         TranslationProfile profile = new TranslationProfile();
         profile.setSourceLanguage(request.sourceLanguage());
         profile.setTargetLanguage(request.targetLanguage());
-        profile.setTranslatorId(translator);
+        profile.setTranslator(translator);
 
         profile = profileRepository.save(profile);
         return map(profile);
@@ -38,7 +38,7 @@ public class TranslationProfileService {
         Translator translator = translatorRepository.findById(translatorId)
                 .orElseThrow(() -> new TranslatorNotFoundException(translatorId));
 
-        return profileRepository.findByTranslatorEmail(translator.getEmail()).stream()
+        return profileRepository.findByTranslatorId(translator.getId()).stream()
                 .map(this::map)
                 .collect(Collectors.toList());
     }
@@ -50,7 +50,7 @@ public class TranslationProfileService {
         TranslationProfile profile = profileRepository.findById(profileId)
                 .orElseThrow(() -> new TranslationProfileNotFoundException("Perfil de tradução não encontrado."));
 
-        if (!profile.getTranslatorId().getId().equals(translatorId)) {
+        if (!profile.getTranslator().getId().equals(translatorId)) {
             throw new TranslationProfileNotFoundException("Perfil não pertence ao tradutor informado.");
         }
 
@@ -68,7 +68,7 @@ public class TranslationProfileService {
         TranslationProfile profile = profileRepository.findById(profileId)
                 .orElseThrow(() -> new TranslationProfileNotFoundException("Perfil de tradução não encontrado."));
 
-        if (!profile.getTranslatorId().getId().equals(translatorId)) {
+        if (!profile.getTranslator().getId().equals(translatorId)) {
             throw new TranslationProfileNotFoundException("Perfil não pertence ao tradutor informado.");
         }
 
@@ -80,7 +80,7 @@ public class TranslationProfileService {
                 profile.getId(),
                 profile.getSourceLanguage(),
                 profile.getTargetLanguage(),
-                profile.getTranslatorId().getId()
+                profile.getTranslator().getId()
         );
     }
 }
