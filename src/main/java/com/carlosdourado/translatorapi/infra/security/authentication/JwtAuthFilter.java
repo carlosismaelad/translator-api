@@ -18,10 +18,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsServiceImpl userDetailsService;
+    private final TokenBlackListInMemory tokenBlacklist;
 
-    public JwtAuthFilter(JwtService jwtService, UserDetailsServiceImpl userDetailsService) {
+
+    public JwtAuthFilter(JwtService jwtService, UserDetailsServiceImpl userDetailsService, TokenBlackListInMemory tokenBlacklist) {
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
+        this.tokenBlacklist = tokenBlacklist;
     }
 
 
@@ -33,6 +36,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
         final String token = authHeader.substring(7);
+
+        if (tokenBlacklist.contains(token)) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Token inválido ou expirado (logout).");
+            return;
+        }
+
         final String username = jwtService.extracrUsername(token);
 
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){

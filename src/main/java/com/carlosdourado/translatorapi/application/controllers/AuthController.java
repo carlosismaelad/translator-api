@@ -6,10 +6,8 @@ import com.carlosdourado.translatorapi.application.dtos.loginDTOs.LoginResponse;
 import com.carlosdourado.translatorapi.application.dtos.registerDTOs.TranslatorRegisterRequest;
 import com.carlosdourado.translatorapi.application.services.register.TranslatorAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/auth")
@@ -26,6 +24,13 @@ public class AuthController {
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request) {
         return translatorAuthService.login(request);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.replace("Bearer ", "");
+        String response = translatorAuthService.logout(token);
+        return ResponseEntity.ok().body(response);
     }
 
 }

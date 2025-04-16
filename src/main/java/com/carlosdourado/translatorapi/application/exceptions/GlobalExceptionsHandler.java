@@ -25,6 +25,11 @@ public class GlobalExceptionsHandler {
         return buildErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidToken(InvalidTokenException ex){
+        return buildErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
+    }
+
     @ExceptionHandler(EmailBelongsToAnotherUserException.class)
     public ResponseEntity<ErrorResponse> handleEmailBelongsToAnotherUser(EmailBelongsToAnotherUserException ex) {
         return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());

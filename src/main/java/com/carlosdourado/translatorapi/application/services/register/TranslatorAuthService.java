@@ -4,13 +4,11 @@ import com.carlosdourado.translatorapi.application.dtos.registerDTOs.TranslatorR
 import com.carlosdourado.translatorapi.application.dtos.loginDTOs.LoginRequest;
 import com.carlosdourado.translatorapi.application.dtos.loginDTOs.LoginResponse;
 import com.carlosdourado.translatorapi.application.dtos.registerDTOs.TranslatorRegisterRequest;
-import com.carlosdourado.translatorapi.application.exceptions.EmailAlreadyInUseException;
-import com.carlosdourado.translatorapi.application.exceptions.InvalidPasswordException;
-import com.carlosdourado.translatorapi.application.exceptions.PasswordConfirmationErrorException;
-import com.carlosdourado.translatorapi.application.exceptions.UnregisteredUserException;
+import com.carlosdourado.translatorapi.application.exceptions.*;
 import com.carlosdourado.translatorapi.domain.entities.Translator;
 import com.carlosdourado.translatorapi.domain.repositories.TranslatorRepository;
 import com.carlosdourado.translatorapi.infra.security.authentication.JwtService;
+import com.carlosdourado.translatorapi.infra.security.authentication.TokenBlackListInMemory;
 import com.carlosdourado.translatorapi.infra.security.password.TranslatorPasswordEncoder;
 import com.carlosdourado.translatorapi.infra.security.password.SaltGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,9 @@ public class TranslatorAuthService {
 
     @Autowired
     private JwtService jwtService;
+
+    @Autowired
+    private TokenBlackListInMemory tokenBlackList;
 
     public TranslatorRegisterResponse register(TranslatorRegisterRequest request){
         if(!request.password().equals(request.confirmPassword()))
@@ -55,5 +56,14 @@ public class TranslatorAuthService {
         String token = jwtService.generateToken(translator.getEmail());
 
         return new LoginResponse("Login efetuado com sucesso!", token);
+    }
+
+    public String logout(String token) {
+        if (token == null || token.isBlank()) {
+            throw new InvalidTokenException("Erro ao realizar logout.");
+        }
+
+        tokenBlackList.add(token);
+        return "Logout realizado com sucesso!";
     }
 }
