@@ -4,6 +4,7 @@ import com.carlosdourado.translatorapi.application.dtos.translatorDTOs.Translato
 import com.carlosdourado.translatorapi.application.dtos.translatorDTOs.TranslatorResponse;
 import com.carlosdourado.translatorapi.application.exceptions.EmailAlreadyInUseException;
 import com.carlosdourado.translatorapi.application.exceptions.EmailBelongsToAnotherUserException;
+import com.carlosdourado.translatorapi.application.exceptions.PasswordConfirmationErrorException;
 import com.carlosdourado.translatorapi.application.exceptions.TranslatorNotFoundException;
 import com.carlosdourado.translatorapi.domain.entities.Translator;
 import com.carlosdourado.translatorapi.domain.repositories.TranslatorRepository;
@@ -44,6 +45,9 @@ public class TranslatorService {
     public TranslatorResponse update(UUID id, TranslatorRequest request) {
         Translator translator = repository.findById(id)
                 .orElseThrow(() -> new TranslatorNotFoundException(id));
+
+        if(!request.password().equals(request.confirmPassword()))
+            throw new PasswordConfirmationErrorException("Senha e confirmação de senha não coincidem.");
 
         var translatorExists = repository.findByEmail(request.email());
         if(translatorExists.isPresent() && !translatorExists.get().getId().equals(id))

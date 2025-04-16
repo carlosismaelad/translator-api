@@ -15,6 +15,11 @@ public class GlobalExceptionsHandler {
         return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
     }
 
+    @ExceptionHandler(PasswordConfirmationErrorException.class)
+    public ResponseEntity<ErrorResponse> handlePasswordConfirmationError(PasswordConfirmationErrorException ex){
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
     @ExceptionHandler(EmailBelongsToAnotherUserException.class)
     public ResponseEntity<ErrorResponse> handleEmailBelongsToAnotherUser(EmailBelongsToAnotherUserException ex) {
         return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
