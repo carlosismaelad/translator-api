@@ -4,6 +4,10 @@ import com.carlosdourado.translatorapi.application.dtos.registerDTOs.TranslatorR
 import com.carlosdourado.translatorapi.application.dtos.loginDTOs.LoginRequest;
 import com.carlosdourado.translatorapi.application.dtos.loginDTOs.LoginResponse;
 import com.carlosdourado.translatorapi.application.dtos.registerDTOs.TranslatorRegisterRequest;
+import com.carlosdourado.translatorapi.application.exceptions.EmailAlreadyInUseException;
+import com.carlosdourado.translatorapi.application.exceptions.InvalidPasswordException;
+import com.carlosdourado.translatorapi.application.exceptions.PasswordConfirmationErrorException;
+import com.carlosdourado.translatorapi.application.exceptions.UnregisteredUserException;
 import com.carlosdourado.translatorapi.domain.entities.Translator;
 import com.carlosdourado.translatorapi.domain.repositories.TranslatorRepository;
 import com.carlosdourado.translatorapi.infra.security.authentication.JwtService;
@@ -22,10 +26,10 @@ public class TranslatorAuthService {
 
     public TranslatorRegisterResponse register(TranslatorRegisterRequest request){
         if(!request.password().equals(request.confirmPassword()))
-            throw new IllegalArgumentException("Senha e confirmação não coincidem.");
+            throw new PasswordConfirmationErrorException("Senha e confirmação não coincidem.");
 
         if (repository.findByEmail(request.email()).isPresent())
-            throw new IllegalArgumentException("e-mail informado já está em uso.");
+            throw new EmailAlreadyInUseException(request.email());
 
         String salt = SaltGenerator.saltGenerator();
         String hashedPassword = TranslatorPasswordEncoder.encode(request.password(), salt);
@@ -42,11 +46,11 @@ public class TranslatorAuthService {
 
     public LoginResponse login(LoginRequest request){
         Translator translator = repository.findByEmail(request.email())
-                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
+                .orElseThrow(() -> new UnregisteredUserException("Usuário não encontrado. Verifique se o e-mail está correto."));
         String hashedInput = TranslatorPasswordEncoder.encode(request.password(), translator.getSalt());
 
         if(!hashedInput.equals(translator.getPassword()))
-            throw new IllegalArgumentException("Senha incorreta! Tente novamente.");
+            throw new InvalidPasswordException();
 
         String token = jwtService.generateToken(translator.getEmail());
 

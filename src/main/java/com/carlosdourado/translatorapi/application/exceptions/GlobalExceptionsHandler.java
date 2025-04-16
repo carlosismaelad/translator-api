@@ -20,6 +20,11 @@ public class GlobalExceptionsHandler {
         return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
+    @ExceptionHandler(UnregisteredUserException.class)
+    public ResponseEntity<ErrorResponse> handleUnregisteredUser(UnregisteredUserException ex){
+        return buildErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
+    }
+
     @ExceptionHandler(EmailBelongsToAnotherUserException.class)
     public ResponseEntity<ErrorResponse> handleEmailBelongsToAnotherUser(EmailBelongsToAnotherUserException ex) {
         return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
