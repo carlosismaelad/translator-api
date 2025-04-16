@@ -17,6 +17,9 @@ public class Document {
 
     private String authorEmail;
 
+    private String sourceLanguage;
+    private String targetLanguage;
+
     @ManyToOne
     @JoinColumn(name = "translator_id")
     private Translator translator;

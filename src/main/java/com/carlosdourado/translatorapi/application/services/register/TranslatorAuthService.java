@@ -33,8 +33,6 @@ public class TranslatorAuthService {
         Translator translator = new Translator();
         translator.setName(request.name());
         translator.setEmail(request.email());
-        translator.setSourceLanguage(request.sourceLanguage());
-        translator.setTargetLanguage(request.targetLanguage());
         translator.setPassword(hashedPassword);
         translator.setSalt(salt);
 

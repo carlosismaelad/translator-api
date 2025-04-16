@@ -38,7 +38,7 @@ public class TranslatorService {
         translator.setSalt(salt);
 
         repository.save(translator);
-        return new TranslatorResponse(translator.getId(), translator.getName(), translator.getEmail(), translator.getSourceLanguage(), translator.getTargetLanguage());
+        return new TranslatorResponse(translator.getId(), translator.getName(), translator.getEmail());
     }
 
     public TranslatorResponse update(UUID id, TranslatorRequest request) {
@@ -51,8 +51,6 @@ public class TranslatorService {
 
         translator.setName(request.name());
         translator.setEmail(request.email());
-        translator.setSourceLanguage(request.sourceLanguage());
-        translator.setTargetLanguage(request.targetLanguage());
 
         if (request.password() != null && !request.password().isBlank()) {
             String salt = SaltGenerator.saltGenerator();
@@ -62,7 +60,7 @@ public class TranslatorService {
         }
 
         repository.save(translator);
-        return new TranslatorResponse(translator.getId(), translator.getName(), translator.getEmail(), translator.getSourceLanguage(), translator.getTargetLanguage());
+        return new TranslatorResponse(translator.getId(), translator.getName(), translator.getEmail());
     }
 
     public void delete(UUID id) {
@@ -75,12 +73,12 @@ public class TranslatorService {
     public TranslatorResponse findById(UUID id) {
         Translator translator = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Tradutor não encontrado."));
-        return new TranslatorResponse(translator.getId(), translator.getName(), translator.getEmail(), translator.getSourceLanguage(), translator.getTargetLanguage());
+        return new TranslatorResponse(translator.getId(), translator.getName(), translator.getEmail());
     }
 
     public List<TranslatorResponse> findAll() {
         return repository.findAll().stream()
-                .map(translator -> new TranslatorResponse(translator.getId(), translator.getName(), translator.getEmail(), translator.getSourceLanguage(), translator.getTargetLanguage()))
+                .map(translator -> new TranslatorResponse(translator.getId(), translator.getName(), translator.getEmail()))
                 .collect(Collectors.toList());
     }
 

@@ -29,8 +29,6 @@ public class Translator implements UserDetails {
     private String email;
     private String password;
     private String salt;
-    private String sourceLanguage;
-    private String targetLanguage;
 
     @OneToMany(mappedBy = "translator", cascade = CascadeType.ALL)
     private List<Document> documents;
