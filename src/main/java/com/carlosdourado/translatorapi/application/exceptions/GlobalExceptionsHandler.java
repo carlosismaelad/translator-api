@@ -59,6 +59,11 @@ public class GlobalExceptionsHandler {
         return buildErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
+    @ExceptionHandler(CommunicationFailureWithOpenAiException.class)
+    public ResponseEntity<ErrorResponse> handleCommunicationFailureWithOpenAi(CommunicationFailureWithOpenAiException ex){
+        return buildErrorResponse(HttpStatus.BAD_GATEWAY, ex.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneric(Exception ex) {
         return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno. Tente novamente mais tarde.");
