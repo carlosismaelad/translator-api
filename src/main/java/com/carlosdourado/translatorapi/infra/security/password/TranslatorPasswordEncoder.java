@@ -1,5 +1,7 @@
 package com.carlosdourado.translatorapi.infra.security.password;
 
+import com.carlosdourado.translatorapi.application.exceptions.TranslatorPasswordEncoderException;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -17,7 +19,7 @@ public class TranslatorPasswordEncoder {
             }
             return sb.toString();
         }catch(NoSuchAlgorithmException ex){
-            throw new RuntimeException("Erro ao criptografar senha: ", ex);
+            throw new TranslatorPasswordEncoderException("Erro ao criptografar senha: " + ex.getMessage());
 
         }
     }
