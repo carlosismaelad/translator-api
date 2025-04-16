@@ -9,5 +9,4 @@ public class OpenAiService {
         // Integração com OpenAI API para detectar idioma
         return "en-US";
     }
-
 }

@@ -3,6 +3,7 @@ package com.carlosdourado.translatorapi.domain.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class TranslationProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -25,7 +27,7 @@ public class TranslationProfile {
 
     @ManyToOne
     @JoinColumn(name = "translator_id")
-    private Translator translator;
+    private Translator translatorId;
 
     @PrePersist
     public void prePersist() {

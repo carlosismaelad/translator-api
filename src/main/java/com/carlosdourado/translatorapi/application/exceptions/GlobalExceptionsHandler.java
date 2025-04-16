@@ -54,11 +54,16 @@ public class GlobalExceptionsHandler {
     public ResponseEntity<ErrorResponse> handleTranslatorPasswordEncode(TranslatorNotFoundException ex){
         return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
     }
+    @ExceptionHandler(TranslationProfileNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleTranslationProfileNotFound(TranslationProfileNotFoundException ex){
+        return buildErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneric(Exception ex) {
         return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno. Tente novamente mais tarde.");
     }
+
 
     private ResponseEntity<ErrorResponse> buildErrorResponse(HttpStatus status, String message) {
         ErrorResponse error = new ErrorResponse(status.value(), message, LocalDateTime.now());
