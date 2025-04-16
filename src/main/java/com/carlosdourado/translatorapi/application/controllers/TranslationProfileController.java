@@ -14,6 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/translators/{translatorId}/profiles")
+@PreAuthorize("isAuthenticated()")
 public class TranslationProfileController {
 
     @Autowired
@@ -23,7 +24,6 @@ public class TranslationProfileController {
         this.service = service;
     }
 
-    @PreAuthorize("isAuthenticated()")
     @PostMapping
     public ResponseEntity<TranslationProfileResponse> create(
             @PathVariable UUID translatorId,
@@ -32,7 +32,6 @@ public class TranslationProfileController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping
     public ResponseEntity<List<TranslationProfileResponse>> list(
             @PathVariable UUID translatorId) {
@@ -40,7 +39,6 @@ public class TranslationProfileController {
         return ResponseEntity.ok(profiles);
     }
 
-    @PreAuthorize("isAuthenticated()")
     @PutMapping("/{profileId}")
     public ResponseEntity<TranslationProfileResponse> update(
             @PathVariable UUID translatorId,
@@ -50,7 +48,6 @@ public class TranslationProfileController {
         return ResponseEntity.ok(updated);
     }
 
-    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{profileId}")
     public ResponseEntity<Void> delete(
             @PathVariable UUID translatorId,
