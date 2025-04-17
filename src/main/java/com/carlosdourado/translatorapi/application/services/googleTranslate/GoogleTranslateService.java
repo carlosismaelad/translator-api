@@ -7,7 +7,7 @@ import com.google.cloud.translate.Translation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,17 +15,11 @@ import java.io.IOException;
 @Service
 public class GoogleTranslateService {
 
-    @Value("${google.credentials.path}")
-    private String googleCredentialsPath;
-
     private final Translate translate;
 
     private static final String GOOGLE_CREDENTIALS_PATH = "/home/carlos-dourado/www/java-projects/translator-api/credentials.json";
 
-
-
     public GoogleTranslateService() {
-        System.out.println("Caminho das credenciais: " + GOOGLE_CREDENTIALS_PATH);
         try {
             File credentialsPath = new File(GOOGLE_CREDENTIALS_PATH);
             if (credentialsPath.exists()) {
