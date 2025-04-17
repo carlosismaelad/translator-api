@@ -8,7 +8,7 @@ public record TranslationTaskResponse(
         UUID id,
         TranslationTaskStatusEnum status,
         UUID documentId,
-        String translatedContent,
-        String errorMessage
+        String errorMessage,
+        boolean isCompleted
 ) {
 }

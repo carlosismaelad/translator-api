@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface DocumentRepository extends JpaRepository<Document, UUID> {
-    List<Document> findAllByTranslator(UUID translatorId);
+    List<Document> findAllByTranslator_Id(UUID translatorId);
 
-    Optional<Document> findByIdAndTranslator(UUID documentId, UUID translatorId);
+    Optional<Document> findByIdAndTranslator_Id(UUID documentId, UUID translatorId);
 }

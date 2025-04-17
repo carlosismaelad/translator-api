@@ -1,6 +1,4 @@
 spring:
-  config:
-    import: optional:env[.env]
   application:
     name: translatorapi
   datasource:
@@ -15,6 +13,6 @@ spring:
   jwt:
     secret-key: "uma-chave-secreta-aleatoria-super-segura-de-pelo-menos-32-caracteres"
     expiration-time: 86400000 # definimos um dia em milissegundos para a expiração do token
-openai:
-  api:
-    key: ${OPENAI_API_KEY}
+google:
+  credentials:
+    path: ${GOOGLE_APPLICATION_CREDENTIALS}

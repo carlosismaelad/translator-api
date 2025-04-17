@@ -31,9 +31,6 @@ public class Translator implements UserDetails {
     private String salt;
 
     @OneToMany(mappedBy = "translator", cascade = CascadeType.ALL)
-    private List<TranslationProfile> profiles;
-
-    @OneToMany(mappedBy = "translator", cascade = CascadeType.ALL)
     private List<Document> documents;
 
     private LocalDateTime createdAt;

@@ -22,11 +22,8 @@ public class TranslationTask {
     @ManyToOne
     private Document document;
 
-    @Lob
-    private String translatedContent;
-
+    @Column(columnDefinition = "TEXT", nullable = true)
     private String errorMessage;
-
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

@@ -19,10 +19,13 @@ public class Document {
 
     private String subject;
     private String content;
+
+    @Column(nullable = true)
     private String locale;
 
     private String authorEmail;
 
+    @Column(nullable = true)
     private String sourceLanguage;
     private String targetLanguage;
 
