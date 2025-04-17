@@ -1,7 +1,7 @@
 package com.carlosdourado.translatorapi.domain.entities;
 
+import com.carlosdourado.translatorapi.domain.entities.enums.TranslationTaskStatusEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,34 +11,29 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-public class Document {
-
+public class TranslationTask {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String subject;
-    private String content;
-    private String locale;
+    @Enumerated(EnumType.STRING)
+    private TranslationTaskStatusEnum status;
 
-    private String authorEmail;
+    @ManyToOne
+    private Document document;
 
-    private String sourceLanguage;
-    private String targetLanguage;
-
+    @Lob
     private String translatedContent;
+
+    private String errorMessage;
+
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "translator_id")
-    private Translator translator;
-
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
-        this.updatedAt = null;
     }
 
     @PreUpdate

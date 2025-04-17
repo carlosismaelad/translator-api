@@ -67,6 +67,4 @@ public class OpenAiTranslationService {
         }
         throw new CommunicationFailureWithOpenAiException("Failed to communicate with OpenAI API.");
     }
-
-
 }

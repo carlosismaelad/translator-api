@@ -54,21 +54,26 @@ public class GlobalExceptionsHandler {
     public ResponseEntity<ErrorResponse> handleTranslatorPasswordEncode(TranslatorNotFoundException ex){
         return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
     }
-    @ExceptionHandler(TranslationProfileNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleTranslationProfileNotFound(TranslationProfileNotFoundException ex){
-        return buildErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
-    }
 
     @ExceptionHandler(CommunicationFailureWithOpenAiException.class)
     public ResponseEntity<ErrorResponse> handleCommunicationFailureWithOpenAi(CommunicationFailureWithOpenAiException ex){
         return buildErrorResponse(HttpStatus.BAD_GATEWAY, ex.getMessage());
     }
 
+    @ExceptionHandler(DocumentNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleDocumentNotFound(DocumentNotFoundException ex){
+        return buildErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    @ExceptionHandler(TaskNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleTaskNotFound(TaskNotFoundException ex){
+        return buildErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneric(Exception ex) {
         return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno. Tente novamente mais tarde.");
     }
-
 
     private ResponseEntity<ErrorResponse> buildErrorResponse(HttpStatus status, String message) {
         ErrorResponse error = new ErrorResponse(status.value(), message, LocalDateTime.now());
