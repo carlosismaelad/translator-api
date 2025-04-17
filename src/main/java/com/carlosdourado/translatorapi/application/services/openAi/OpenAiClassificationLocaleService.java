@@ -4,7 +4,6 @@ import com.carlosdourado.translatorapi.application.exceptions.CommunicationFailu
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
-import org.springframework.objenesis.SpringObjenesis;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class OpenAiTranslationService {
+public class OpenAiClassificationLocaleService {
 
     @Value("${openai.api.key}")
     private String apiKey;
@@ -21,18 +20,11 @@ public class OpenAiTranslationService {
     private final static String CHAT_COMPLETIO_URL = "https://api.openai.com/v1/chat/completions";
 
 
-    public String detectLocale(String text) {
-        String prompt = String.format("Detect the language of the following text and only the language name (e.g: English, Portuguese, Spanish): \n\n%s", text);
+    public String classifyLocale(String text) {
+        String prompt = String.format("Detect the language of the following text and return only the language (e.g: if it is English return en-US): \n\n%s", text);
         return sendChatRequest(text);
     }
 
-    public String translate(String text, String sourceLangueg, String targetLangue){
-        String prompt = String.format(
-                "Translate the following text from %s to %s:\n\n%s",
-                sourceLangueg, targetLangue, text
-        );
-        return sendChatRequest(prompt);
-    }
 
     private String sendChatRequest(String prompt){
         HttpHeaders headers = new HttpHeaders();
