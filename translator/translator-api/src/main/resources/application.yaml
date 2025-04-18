@@ -2,17 +2,15 @@ spring:
   application:
     name: translatorapi
   datasource:
-    url: jdbc:postgresql://localhost:5432/translatordb
-    username: postgres
-    password: postgres
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
   jwt:
-    secret-key: "uma-chave-secreta-aleatoria-super-segura-de-pelo-menos-32-caracteres"
+    secret-key: ${SECRET_KEY}
     expiration-time: 86400000 # definimos um dia em milissegundos para a expiração do token
-google:
-  credentials:
-    path: ${GOOGLE_APPLICATION_CREDENTIALS}
+
