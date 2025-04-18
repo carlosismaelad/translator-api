@@ -1,18 +1,17 @@
-FROM ubuntu:latest AS build
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 
-RUN apt-get update && apt-get install -y openjdk-21-jdk maven
 WORKDIR /app
-COPY . .
 
-RUN apt-get install maven -y
-RUN mvn clean install
+COPY pom.xml .
+COPY src ./src
 
-FROM openjdk:21-jdk-slim
+RUN mvn clean package -DskipTests
 
-COPY --from=build /target/translatorapi-0.0.1-SNAPSHOT.jar app.jar
-COPY --from=build /app/credentials.json credentials.json
+FROM eclipse-temurin:21-jdk-alpine
 
-ENV GOOGLE_CREDENTIALS_PATH=credentials.json
+WORKDIR /app
+
+COPY --from=build /app/target/translatorapi-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 
