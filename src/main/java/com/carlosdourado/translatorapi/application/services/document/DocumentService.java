@@ -40,9 +40,6 @@ public class DocumentService {
         if(doc.authorEmail() == null || doc.authorEmail().isBlank())
             throw new BlankOrNullParametersException("O campo email do autor não pode estar em branco.");
 
-        if (doc.sourceLanguage() == null || doc.sourceLanguage().isBlank())
-            throw new BlankOrNullParametersException("A campo 'língua de origem' não pode estar em branco.");
-
         if (doc.targetLanguage() == null || doc.targetLanguage().isBlank())
             throw new BlankOrNullParametersException("A campo 'língua de destino' não pode ser estar em branco.");
 

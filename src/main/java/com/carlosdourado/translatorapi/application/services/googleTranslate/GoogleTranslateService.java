@@ -4,7 +4,6 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
@@ -45,6 +44,10 @@ public class GoogleTranslateService {
                 Translate.TranslateOption.targetLanguage(targetLang)
         );
         return translation.getTranslatedText();
+    }
+
+    public String detectSourceLanguage(String text){
+        return translate.detect(text).getLanguage();
     }
 }
 

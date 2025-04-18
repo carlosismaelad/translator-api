@@ -39,6 +39,11 @@ public class TranslationTaskService {
 
             Document document = task.getDocument();
 
+            if(document.getSourceLanguage() == null || document.getSourceLanguage().isBlank()){
+                String sourceLanguage = googleTranslateService.detectSourceLanguage(document.getContent());
+                document.setSourceLanguage(sourceLanguage);
+            }
+
             String translated = googleTranslateService.translate(
                     document.getContent(),
                     document.getSourceLanguage(),
