@@ -1,0 +1,34 @@
+networks:
+  translator-network:
+    driver: bridge
+
+services:
+  translatordb:
+    image: postgres:16.8
+    container_name: translatordb
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: translatordb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - translator-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_translator
+    depends_on:
+      - translatordb
+    ports:
+      - "15432:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    networks:
+      - translator-network
+
+volumes:
+  pgdata:
