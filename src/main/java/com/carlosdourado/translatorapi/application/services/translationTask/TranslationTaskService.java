@@ -143,4 +143,16 @@ public class TranslationTaskService {
                 TranslationTaskStatusEnum.COMPLETED.equals(task.getStatus())
         );
     }
+
+    public TranslationTask processCsvTranslationAsync(Document document) {
+        TranslationTask task = new TranslationTask();
+        task.setDocument(document);
+        task.setStatus(TranslationTaskStatusEnum.PENDING);
+
+        task = translationTaskRepository.save(task);
+
+        processTranslationAsync(task.getId());
+
+        return task;
+    }
 }
