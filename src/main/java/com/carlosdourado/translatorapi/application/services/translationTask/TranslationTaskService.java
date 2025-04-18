@@ -121,13 +121,13 @@ public class TranslationTaskService {
         );
     }
 
-    public TranslationTaskResponse getTaskById(UUID taskId, UUID translatorId) {
+    public TranslationTaskResponse getTaskByIdAnsTranslatorId(UUID taskId, UUID translatorId) {
         TranslationTask task = translationTaskRepository.findByIdAndDocument_Translator_Id(taskId, translatorId)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found or not accessible"));
         return toResponse(task);
     }
 
-    public List<TranslationTaskResponse> getTasksByTranslator(UUID translatorId) {
+    public List<TranslationTaskResponse> getTasksByTranslatorId(UUID translatorId) {
         return translationTaskRepository.findAllByDocument_Translator_Id(translatorId)
                 .stream()
                 .map(this::toResponse)
