@@ -12,5 +12,5 @@ spring:
       ddl-auto: update
   jwt:
     secret-key: ${SECRET_KEY}
-    expiration-time: 86400000 # definimos um dia em milissegundos para a expiração do token
+    expiration-time: ${EXPIRATION_TIME} # definimos um dia em milissegundos para a expiração do token
 
