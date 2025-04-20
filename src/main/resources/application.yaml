@@ -15,5 +15,5 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   jwt:
     secret-key: ${SECRET_KEY}
-    expiration-time: ${EXPIRATION_TIME} # definimos um dia em milissegundos para a expiração do token
+    expiration-time: ${EXPIRATION_TIME}
 
