@@ -72,9 +72,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(List.of(
-                "https://translator-front-3xd6.vercel.app",
-                "https://translator-front-3xd6-git-main-carlosdourado-projects.vercel.app",
-                "https://translator-front-3xd6-l8s6o59ow-carlosdourado-projects.vercel.app"
+                "https://translator-front-3xd6.vercel.app"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
