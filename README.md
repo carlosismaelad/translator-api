@@ -247,7 +247,7 @@ id: O ID do tradutor a ser deletado (UUID).
   "subject": "Assunto do Documento",
   "content": "Conteúdo do Documento",
   "authorEmail": "autor@dominio.com",
-  "sourceLanguage": "pt",
+  "sourceLanguage": "pt", (opcional! caso não seja enviado o sistema identifica o idioma de origem)
   "targetLanguage": "en"
   }
 - request response
