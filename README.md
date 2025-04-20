@@ -30,43 +30,6 @@ além da proteção de rotas via JWT.
 - Postgres
 - Docker
 
-## 📦 Estrutura do Projeto
-src
-.
-├── main
-│   ├── java
-│   │   └── com
-│   │       └── carlosdourado
-│   │           └── translatorapi
-│   │               ├── application
-│   │               │   ├── controllers
-│   │               │   ├── dtos
-│   │               │   │   ├── documentTranslationDTOs
-│   │               │   │   ├── loginDTOs
-│   │               │   │   ├── registerDTOs
-│   │               │   │   ├── shared
-│   │               │   │   ├── translationTask
-│   │               │   │   └── translatorDTOs
-│   │               │   ├── exceptions
-│   │               │   └── services
-│   │               │       ├── document
-│   │               │       ├── googleTranslate
-│   │               │       ├── register
-│   │               │       ├── translationTask
-│   │               │       └── translator
-│   │               ├── Application.java
-│   │               ├── domain
-│   │               │   ├── entities
-│   │               │   │   ├── enums
-│   │               │   └── repositories
-│   │               └── infra
-│   │                   ├── config
-│   │                   └── security
-│   │                       ├── authentication
-│   │                       └── password
-│   └── resources
-│       └── application.yaml
-
 
 ## Variáveis de Ambiente
 
