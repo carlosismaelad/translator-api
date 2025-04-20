@@ -118,6 +118,7 @@ cd translator-api
 
 - Adicione as linhas abaixo ao seu Dockerfile:
 COPY credentials.json /app/.secrets/credentials.json (abaixo da linha que copia o .jar do projeto)
+
 ENV GOOGLE_APPLICATION_CREDENTIALS=/app/.secrets/credentials.json (abaixo da linha que expõe a posta 8080)
 
 
